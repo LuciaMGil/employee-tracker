@@ -1,7 +1,7 @@
 {
   "name": "employee-tracker",
   "version": "1.0.0",
-  "description": "Tracks employee information using sql and node.js",
+  "description": "Tracks company information",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,14 +11,19 @@
     "url": "git+https://github.com/LuciaMGil/employee-tracker.git"
   },
   "keywords": [
-    "node.js",
+    "inquirer",
     "sql",
-    "inquirer"
+    "mysql2",
+    "node.js"
   ],
   "author": "Lucia Gil",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LuciaMGil/employee-tracker/issues"
   },
-  "homepage": "https://github.com/LuciaMGil/employee-tracker#readme"
+  "homepage": "https://github.com/LuciaMGil/employee-tracker#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^2.3.3"
+  }
 }
