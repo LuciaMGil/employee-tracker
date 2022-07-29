@@ -39,23 +39,20 @@ const promptQuestions = () => {
             break;
         case "View all employees":
             viewAllEmployees();
-        
             break;
         case "Add a department":
-            console.log(`Add a department`);
+            addDepartment();
             break;
         case "Add a role":
-            console.log(`Add a role`);
+            addRole();
             break;
         case "Add an employee":
-            console.log(`Add an employee`);
+            addEmployee();
             break;
         case "Update an employee role":
-            console.log(`Update an employee role`);
+            updateEmployee();
             break;
         case "Exit":
-        
-        
             console.log(`Done`);
             break;
     }
@@ -96,7 +93,7 @@ const addDepartment = () => {
         }
     ])
     .then((data) => {
-    // Create department with sql
+        const newDepartment =
     })
 };
 
@@ -191,7 +188,7 @@ const viewAllRoles = () => {
         department_id AS "Department"
         FROM roles`
     connection.query(query, function (err, results){
-        err ? console.log(err) : console.table(results); promptQuestions();
+        err ? console.log(err) : console.table(results); promptQuestions(); 
     })
 }
 
