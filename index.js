@@ -173,14 +173,24 @@ const viewAllEmployees = () => {
 };
 
 const viewAllDepartments = () => {
-    connection.query('SELECT id AS "ID", department_name AS "Department Name" FROM department', function (err, results){
+    const query = `SELECT 
+    id AS "ID", 
+    department_name AS "Department Name" 
+    FROM department`
+    connection.query(query, function (err, results){
         err ? console.log(err) : console.table(results); promptQuestions();
         });
     
 }
 
 const viewAllRoles = () => {
-    connection.query('SELECT id AS "ID", title AS "Title", salary AS "Salary", department_id AS "Department" FROM roles', function (err, results){
+    const query = `SELECT 
+        id AS "ID",
+        title AS "Title",
+        salary AS "Salary",
+        department_id AS "Department"
+        FROM roles`
+    connection.query(query, function (err, results){
         err ? console.log(err) : console.table(results); promptQuestions();
     })
 }
