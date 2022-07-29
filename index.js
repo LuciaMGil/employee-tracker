@@ -35,9 +35,7 @@ const promptQuestions = () => {
             viewAllDepartments();
             break;
         case "View all roles":
-            connection.query('SELECT * FROM roles', function (err, results){
-                err ? console.log(err) : console.log(results);
-            })
+            viewAllRoles();
             break;
         case "View all employees":
             viewAllEmployees();
@@ -179,6 +177,12 @@ const viewAllDepartments = () => {
         err ? console.log(err) : console.table(results); promptQuestions();
         });
     
+}
+
+const viewAllRoles = () => {
+    connection.query('SELECT id AS "ID", title AS "Title", salary AS "Salary", department_id AS "Department" FROM roles', function (err, results){
+        err ? console.log(err) : console.table(results); promptQuestions();
+    })
 }
 
 promptQuestions();
