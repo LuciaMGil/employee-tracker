@@ -93,7 +93,11 @@ const addDepartment = () => {
         }
     ])
     .then((data) => {
-        const newDepartment =
+        const newDepartment = data.department;
+        var query = `INSERT INTO department (department_name) VALUES ("${newDepartment}")`
+        connection.query(query, (err, result) =>{
+            err ? console.log(err) : console.log(`Added ${newDepartment} to database`); promptQuestions();
+        })
     })
 };
 
