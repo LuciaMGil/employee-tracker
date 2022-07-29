@@ -5,7 +5,7 @@ const cTable = require('console.table');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'Tofusombra',
     database: 'company_db'
   },
   console.log(`Connected to the company_db database`)
@@ -13,17 +13,56 @@ const connection = mysql.createConnection({
 
 
 
-promptQuestions = () => {
+const promptQuestions = () => {
     return inquirer.prompt([
         {
         type: 'list',
         message: 'What can I help with?',
         name: 'choice',
-        choices: [ 'View all departments', 'View all roles' , 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
+        choices: [ 
+            'View all departments', 
+            'View all roles' , 
+            'View all employees', 
+            'Add a department', 
+            'Add a role', 
+            'Add an employee', 
+            'Update an employee role']
         }
     ])
+.then((data) => {
+    switch (data.choice) {
+        case "View all departments":
+            viewAllDepartments();
+            break;
+        case "View all roles":
+            connection.query('SELECT * FROM roles', function (err, results){
+                err ? console.log(err) : console.log(results);
+            })
+            break;
+        case "View all employees":
+            viewAllEmployees();
+        
+            break;
+        case "Add a department":
+            console.log(`Add a department`);
+            break;
+        case "Add a role":
+            console.log(`Add a role`);
+            break;
+        case "Add an employee":
+            console.log(`Add an employee`);
+            break;
+        case "Update an employee role":
+            console.log(`Update an employee role`);
+            break;
+        case "Exit":
+        
+        
+            console.log(`Done`);
+            break;
+    }
+});
 }
-
 
 const addRole = () => {
     return inquirer.prompt([
@@ -123,67 +162,23 @@ const updateEmployee = () => {
 };
 
 const viewAllEmployees = () => {
-    // console.log(
-    //   boxen(
-    //     "                            - EMPLOYEES -                             ",
-    //     { padding: 1, borderStyle: "double" }
-    //   )
-    // );
     const query = `SELECT 
-    employee.id AS "ID",
+    employees.id AS "ID",
     first_name AS "First Name",
     last_name AS "Last Name",
-    role_id AS "Title",
-    FROM employee
+    role_id AS "Title"
+    FROM employees
     `;
-    connection.query(query, (err, res) => {
-      if (err) throw err;
-  
-      console.table(res);
-      console.log(
-        `-------------------------------------------------------------------------------`
-      );
-      promptQuestions();
+    connection.query(query, (err, results) => {
+      err? console.log(err): console.table(results); promptQuestions();
     });
 };
 
-promptQuestions()
-.then((data) => {
-    switch (data.choice) {
-        case "View all departments":
-            connection.query('SELECT * FROM department', function (err, results){
-                err ? console.log(err) : console.log(results);
-            })
-            break;
-        case "View all roles":
-            connection.query('SELECT * FROM roles', function (err, results){
-                err ? console.log(err) : console.log(results);
-            })
-            break;
-        case "View all employees":
-            viewAllEmployees();
-            // console.log(`View all employee`)
-            // connection.query('SELECT * FROM employee', function (err, results){
-            //     err ? console.log(err) : console.log(results);
-            // })
-            //  'Add an employee', 'Update an employee role'
-            break;
-        case "Add a department":
-            console.log(`Add a department`);
-            break;
-        case "Add a role":
-            console.log(`Add a role`);
-            break;
-        case "Add an employee":
-            console.log(`Add an employee`);
-            break;
-        case "Update an employee role":
-            console.log(`Update an employee role`);
-            break;
-        case "Exit":
-        
-        
-            console.log(`Done`);
-            break;
-    }
-});
+const viewAllDepartments = () => {
+    connection.query('SELECT id AS "ID", department_name AS "Department Name" FROM department', function (err, results){
+        err ? console.log(err) : console.table(results); promptQuestions();
+        });
+    
+}
+
+promptQuestions();
