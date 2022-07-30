@@ -24,3 +24,11 @@ VALUES ("Robert", "Downey Jr", 4,2),
 INSERT INTO manager (managerName)
 VALUES ("Wayne Johnson"),
         ("Samantha Smith");
+SELECT 
+ roles.id AS "ID",
+  title AS "Role Title",
+  salary AS "Salary",
+  department_id AS "Department"
+  FROM roles
+  FULL JOIN department ON roles.department_id = department.id
+

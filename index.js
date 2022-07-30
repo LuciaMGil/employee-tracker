@@ -83,7 +83,7 @@ const addRole = () => {
         const department = data.department
         var query = `INSERT INTO roles (title, salary, department_id) VALUES ("${newRole}",${salary},${department})`
         connection.query(query, (err, result) =>{
-            err ? console.log(err) : console.log(`Added ${newRole} to database`); promptQuestions();
+            err ? console.log(err) : console.log("\n"); console.log(`Added ${newRole} to database`); promptQuestions();
         })
     });    
 };
@@ -101,7 +101,7 @@ const addDepartment = () => {
         const newDepartment = data.department;
         var query = `INSERT INTO department (department_name) VALUES ("${newDepartment}")`
         connection.query(query, (err, result) =>{
-            err ? console.log(err) : console.log(`Added ${newDepartment} to database`); promptQuestions();
+            err ? console.log(err) : console.log("\n"); console.log(`Added ${newDepartment} to database`); promptQuestions();
         })
     })
 };
@@ -138,7 +138,7 @@ const addEmployee = () => {
 
         var query = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${firstName}","${lastName}",${role},${manager})`
         connection.query(query, (err, result) =>{
-            err ? console.log(err) : console.log(`Added ${firstName} ${lastName} to database`); promptQuestions();
+            err ? console.log(err) : console.log("\n"); console.log(`Added ${firstName} ${lastName} to database`); promptQuestions();
         })
     })
 };
@@ -146,30 +146,24 @@ const addEmployee = () => {
 const updateEmployee = () => {
     return inquirer.prompt([
         {
-            type: 'input',
-            message: 'What is the first name of the employee?',
-            name: 'firstName'
+            type: "input",
+            message: "What is the employees ID number?",
+            name: "employeeID",
         },
         {
-            type: 'input',
-            message: 'What is the last name of the employee?',
-            name: 'lastName',
-        },
-        {
-            type: 'list',
-            message: 'What is the employees role?',
-            name: 'role',
-            choices: ['Sales Lead', "Sales", "Finance", "Legal"]
-        },
-        {
-            type: 'list',
-            message: 'Who is employees manager?',
-            name: 'manager',
-            choices: ['Mary Joe', 'Manny Rodriguez', "Sofia Greene", "Owen Wilkins"]
+            type: "input",
+            message: "What is the new role ID",
+            name: "newRole",
         },
     ])
     .then((data) => {
-    // Update employee with sql
+        const employeeID = data.employeeID;
+        const newRole = data.newRole;
+
+        var query = `UPDATE employees SET role_id = ${newRole} where id = ${employeeID}`
+        connection.query(query, (err, result) =>{
+            err ? console.log(err) : console.log("\n"); console.log(`Updated employee to database`); promptQuestions();
+        })
     })
 };
 
@@ -182,7 +176,7 @@ const viewAllEmployees = () => {
     FROM employees
     `;
     connection.query(query, (err, results) => {
-      err? console.log(err): console.table(results); promptQuestions();
+      err? console.log(err): console.log("\n"); console.table(results); promptQuestions();
     });
 };
 
@@ -192,7 +186,7 @@ const viewAllDepartments = () => {
     department_name AS "Department Name" 
     FROM department`
     connection.query(query, function (err, results){
-        err ? console.log(err) : console.table(results); promptQuestions();
+        err ? console.log(err) : console.log("\n"); console.table(results); promptQuestions();
         });
     
 }
@@ -205,7 +199,7 @@ const viewAllRoles = () => {
         department_id AS "Department"
         FROM roles`
     connection.query(query, function (err, results){
-        err ? console.log(err) : console.table(results); promptQuestions(); 
+        err ? console.log(err) : console.log("\n"); console.table(results); promptQuestions(); 
     })
 }
 
