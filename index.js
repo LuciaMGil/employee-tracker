@@ -73,14 +73,19 @@ const addRole = () => {
         },
         {
             type: 'input',
-            message: 'What department does the role belong to?',
-            name: 'salary'
+            message: 'Enter corresponding department ID.',
+            name: 'department'
         },
     ])
     .then((data) => {
-    // Create roll with sql
-    console.log(`Added ___`)
-    });
+        const newRole = data.roles;
+        const salary = data.salary;
+        const department = data.department
+        var query = `INSERT INTO roles (title, salary, department_id) VALUES ("${newRole}",${salary},${department})`
+        connection.query(query, (err, result) =>{
+            err ? console.log(err) : console.log(`Added ${newRole} to database`); promptQuestions();
+        })
+    });    
 };
 
 
@@ -93,7 +98,11 @@ const addDepartment = () => {
         }
     ])
     .then((data) => {
-        const newDepartment =
+        const newDepartment = data.department;
+        var query = `INSERT INTO department (department_name) VALUES ("${newDepartment}")`
+        connection.query(query, (err, result) =>{
+            err ? console.log(err) : console.log(`Added ${newDepartment} to database`); promptQuestions();
+        })
     })
 };
 
