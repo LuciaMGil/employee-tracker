@@ -121,17 +121,25 @@ const addEmployee = () => {
         },
         {
             type: 'input',
-            message: 'What is the role of the employee?',
+            message: 'What is the role ID of the employee?',
             name: 'role',
         },
         {
             type: 'input',
-            message: 'Who is the manager of the employee?',
+            message: 'What is the ID of the employees manager?',
             name: 'manager',
         },
     ])
     .then((data) => {
-    // Create employee with sql
+        const firstName = data.firstName;
+        const lastName = data.lastName;
+        const role = data.role;
+        const manager = data.manager;
+
+        var query = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${firstName}","${lastName}",${role},${manager})`
+        connection.query(query, (err, result) =>{
+            err ? console.log(err) : console.log(`Added ${firstName} ${lastName} to database`); promptQuestions();
+        })
     })
 };
 
