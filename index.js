@@ -170,10 +170,16 @@ const updateEmployee = () => {
 const viewAllEmployees = () => {
     const query = `SELECT 
     employees.id AS "ID",
-    first_name AS "First Name",
-    last_name AS "Last Name",
-    role_id AS "Title"
+    employees.first_name AS "First Name",
+    employees.last_name AS "Last Name",
+    roles.title  AS "Title",
+    roles.salary AS "Salary",
+    department.department_name AS "Department",
+    manager.managerName AS "Manager"
     FROM employees
+    LEFT JOIN roles ON roles.id = employees.role_id
+    LEFT JOIN department ON roles.department_id = department.id
+    LEFT JOIN manager ON manager.id = employees.manager_id
     `;
     connection.query(query, (err, results) => {
       err? console.log(err): console.log("\n"); console.table(results); promptQuestions();
@@ -193,11 +199,12 @@ const viewAllDepartments = () => {
 
 const viewAllRoles = () => {
     const query = `SELECT 
-        id AS "ID",
-        title AS "Title",
-        salary AS "Salary",
-        department_id AS "Department"
-        FROM roles`
+        roles.id AS "ID",
+        roles.title AS "Title",
+        roles.salary AS "Salary",
+        department.department_name AS "Department"
+        FROM roles
+        LEFT JOIN department ON roles.department_id = department.id `
     connection.query(query, function (err, results){
         err ? console.log(err) : console.log("\n"); console.table(results); promptQuestions(); 
     })
